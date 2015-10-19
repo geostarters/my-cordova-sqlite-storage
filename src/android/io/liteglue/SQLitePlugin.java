@@ -10,7 +10,6 @@ import android.annotation.SuppressLint;
 
 import android.util.Base64;
 import android.util.Log;
-import android.database.sqlite.SQLiteStatement;
 
 import java.io.File;
 import java.lang.IllegalArgumentException;
@@ -563,9 +562,9 @@ public class SQLitePlugin extends CordovaPlugin {
                         case SQLColumnType.BLOB:
                                 Log.i("ionic", "Column type es blob");
                                 Log.i("ionic", "key:"+key);
-                                String res = new String(Base64.encode(myStatement.columnBlob(i), Base64.DEFAULT));
-                                Log.i("ionic", "blob:"+res);
-                                row.put(key, res);
+                               // String res = new String(Base64.encode(myStatement.columnBlob(i), Base64.DEFAULT));
+                                //Log.i("ionic", "blob:"+res);
+                                //row.put(key, res);
                                 //Log.i("ionic", myStatement.getColumnBlob(i));
                         case SQLColumnType.TEXT:
                                 Log.i("ionic", "Column type es text");

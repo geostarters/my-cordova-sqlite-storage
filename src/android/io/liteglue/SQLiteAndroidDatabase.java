@@ -93,6 +93,8 @@ class SQLiteAndroidDatabase
     void executeSqlBatch(String[] queryarr, JSONArray[] jsonparams,
                                  String[] queryIDs, CallbackContext cbc) {
 
+        Log.i("ionic", "android executeSqlBatch");
+        
         if (mydb == null) {
             // not allowed - can only happen if someone has closed (and possibly deleted) a database and then re-used the database
             cbc.error("database has been closed");
@@ -455,6 +457,7 @@ class SQLiteAndroidDatabase
                 row.put(key, cur.getDouble(i));
                 break;
             case Cursor.FIELD_TYPE_BLOB:
+                Log.i("ionic", "Tipus BLOB:"+ new String(Base64.encode(cur.getBlob(i), Base64.DEFAULT)));
                 row.put(key, new String(Base64.encode(cur.getBlob(i), Base64.DEFAULT)));
                 break;
             case Cursor.FIELD_TYPE_STRING:
@@ -478,6 +481,7 @@ class SQLiteAndroidDatabase
         } else if (cursorWindow.isFloat(pos, i)) {
             row.put(key, cursor.getDouble(i));
         } else if (cursorWindow.isBlob(pos, i)) {
+            Log.i("ionic", "Tipus BLOB:"+ new String(Base64.encode(cur.getBlob(i), Base64.DEFAULT)));
             row.put(key, new String(Base64.encode(cursor.getBlob(i), Base64.DEFAULT)));
         } else { // string
             row.put(key, cursor.getString(i));
