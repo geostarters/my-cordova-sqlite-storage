@@ -548,21 +548,21 @@ public class SQLitePlugin extends CordovaPlugin {
                         case SQLColumnType.REAL:
                                 Log.i("ionic", "Column type es real");
                                 Log.i("ionic", "key:"+key);
-                                Log.i("ionic", myStatement.getColumnDouble(i));
+                                //Log.i("ionic", myStatement.getColumnDouble(i));
                             row.put(key, myStatement.getColumnDouble(i));
                             break;
 
                         case SQLColumnType.INTEGER:
                                 Log.i("ionic", "Column type es integer");
                                 Log.i("ionic", "key:"+key);
-                                Log.i("ionic", myStatement.getColumnLong(i));
-                            row.put(key, myStatement.getColumnLong(i));
+                                Log.i("ionic", "result:"+Long.toString(myStatement.getColumnLong(i)));
+                                row.put(key, Long.toString(myStatement.getColumnLong(i)));
                             break;
 
                         case SQLColumnType.BLOB:
                                 Log.i("ionic", "Column type es blob");
                                 Log.i("ionic", "key:"+key);
-                                Log.i("ionic", myStatement.getColumnBlob(i));
+                                //Log.i("ionic", myStatement.getColumnBlob(i));
                         case SQLColumnType.TEXT:
                                 Log.i("ionic", "Column type es text");
                                 Log.i("ionic", "key:"+key);
