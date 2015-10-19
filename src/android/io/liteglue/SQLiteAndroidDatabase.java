@@ -481,7 +481,7 @@ class SQLiteAndroidDatabase
         } else if (cursorWindow.isFloat(pos, i)) {
             row.put(key, cursor.getDouble(i));
         } else if (cursorWindow.isBlob(pos, i)) {
-            Log.i("ionic", "Tipus BLOB:"+ new String(Base64.encode(cur.getBlob(i), Base64.DEFAULT)));
+            Log.i("ionic", "Tipus BLOB:"+ new String(Base64.encode(cursor.getBlob(i), Base64.DEFAULT)));
             row.put(key, new String(Base64.encode(cursor.getBlob(i), Base64.DEFAULT)));
         } else { // string
             row.put(key, cursor.getString(i));
