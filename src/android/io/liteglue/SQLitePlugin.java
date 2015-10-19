@@ -10,6 +10,7 @@ import android.annotation.SuppressLint;
 
 import android.util.Base64;
 import android.util.Log;
+import android.database.sqlite.SQLiteStatement
 
 import java.io.File;
 import java.lang.IllegalArgumentException;
