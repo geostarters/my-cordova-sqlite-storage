@@ -541,25 +541,34 @@ public class SQLitePlugin extends CordovaPlugin {
                         switch (myStatement.getColumnType(i)) {
                         case SQLColumnType.NULL:
                                 Log.i("ionic", "Column type es null");
+                                Log.i("ionic", "key:"+key);
                             row.put(key, JSONObject.NULL);
                             break;
 
                         case SQLColumnType.REAL:
                                 Log.i("ionic", "Column type es real");
+                                Log.i("ionic", "key:"+key);
+                                Log.i("ionic", myStatement.getColumnDouble(i));
                             row.put(key, myStatement.getColumnDouble(i));
                             break;
 
                         case SQLColumnType.INTEGER:
                                 Log.i("ionic", "Column type es integer");
+                                Log.i("ionic", "key:"+key);
+                                Log.i("ionic", myStatement.getColumnLong(i));
                             row.put(key, myStatement.getColumnLong(i));
                             break;
 
                         case SQLColumnType.BLOB:
                                 Log.i("ionic", "Column type es blob");
+                                Log.i("ionic", "key:"+key);
+                                Log.i("ionic", myStatement.getColumnBlob(i));
                         case SQLColumnType.TEXT:
                                 Log.i("ionic", "Column type es text");
+                                Log.i("ionic", "key:"+key);
                         default: // (just in case)
                                 Log.i("ionic", "Column type es default");
+                                Log.i("ionic", "key:"+key);
                             row.put(key, myStatement.getColumnTextNativeString(i));
                         }
 
