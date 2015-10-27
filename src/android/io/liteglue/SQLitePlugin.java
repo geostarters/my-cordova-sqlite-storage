@@ -220,7 +220,7 @@ public class SQLitePlugin extends CordovaPlugin {
                 dbfile.getParentFile().mkdirs();
             }
 
-            Log.v("info", "Open sqlite db: " + dbfile.getAbsolutePath());
+            Log.i("ionic", "Open sqlite db: " + dbfile.getAbsolutePath());
 
             SQLiteAndroidDatabase mydb = old_impl ? new SQLiteAndroidDatabase() : new SQLiteDatabaseNDK();
             mydb.open(dbfile);
@@ -265,9 +265,10 @@ public class SQLitePlugin extends CordovaPlugin {
                 while ((len = in.read(buf)) > 0)
                     out.write(buf, 0, len);
     
-                Log.v("info", "Copied prepopulated DB content to: " + newDbFile.getAbsolutePath());
+                Log.i("ionic", "Copied prepopulated DB content to: " + newDbFile.getAbsolutePath());
+                Log.i("ionic", "Copied prepopulated DB content to: " + newDbFile.getAbsolutePath());
             } catch (IOException e) {
-                Log.v("createFromAssets", "No prepopulated DB found, Error=" + e.getMessage());
+                Log.i("ionic createFromAssets", "No prepopulated DB found, Error=" + e.getMessage());
             } finally {
                 if (in != null) {
                     try {

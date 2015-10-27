@@ -229,14 +229,14 @@ public class SQLitePlugin extends CordovaPlugin {
             }
 
             File dbfile = this.cordova.getActivity().getDatabasePath(dbname);
-
+            Log.i("ionic 2", "dbfile.getAbsolutePath():"+dbfile.getAbsolutePath());
             if (!dbfile.exists() && createFromAssets) this.createFromAssets(dbname, dbfile);
 
             if (!dbfile.exists()) {
                 dbfile.getParentFile().mkdirs();
             }
 
-            Log.v("info", "Open sqlite db: " + dbfile.getAbsolutePath());
+            Log.v("ionic 2", "Open sqlite db: " + dbfile.getAbsolutePath());
 
             SQLiteDatabase mydb = SQLiteDatabase.openOrCreateDatabase(dbfile, null);
 
@@ -264,7 +264,7 @@ public class SQLitePlugin extends CordovaPlugin {
                 in = this.cordova.getActivity().getAssets().open("www/" + myDBName);
                 String dbPath = dbfile.getAbsolutePath();
                 dbPath = dbPath.substring(0, dbPath.lastIndexOf("/") + 1);
-
+                Log.i("ionic 2", "dbPath:"+dbPath);
                 File dbPathFile = new File(dbPath);
                 if (!dbPathFile.exists())
                     dbPathFile.mkdirs();
@@ -279,7 +279,7 @@ public class SQLitePlugin extends CordovaPlugin {
                 while ((len = in.read(buf)) > 0)
                     out.write(buf, 0, len);
     
-                Log.v("info", "Copied prepopulated DB content to: " + newDbFile.getAbsolutePath());
+                Log.i("ionic 2", "Copied prepopulated DB content to: " + newDbFile.getAbsolutePath());
             } catch (IOException e) {
                 Log.v("createFromAssets", "No prepopulated DB found, Error=" + e.getMessage());
             } finally {
