@@ -220,7 +220,7 @@ public class SQLitePlugin extends CordovaPlugin {
      *
      * @param dbName   The name of the database file
      */
-    private SQLiteDatabase openDatabase(String dbname, boolean createFromAssets, CallbackContext cbc) throws Exception {
+    private SQLiteDatabase openDatabase(String dbname, boolean createFromAssets, CallbackContext cbc, int modeAssets) throws Exception {
         try {
             if (this.getDatabase(dbname) != null) {
                 // this should not happen - should be blocked at the execute("open") level
@@ -230,6 +230,8 @@ public class SQLitePlugin extends CordovaPlugin {
 
             File dbfile = this.cordova.getActivity().getDatabasePath(dbname);
             Log.i("ionic 2", "dbfile.getAbsolutePath():"+dbfile.getAbsolutePath());
+            Log.i("ionic 2", "modeAssets:"+modeAssets);
+            
             if (!dbfile.exists() && createFromAssets) this.createFromAssets(dbname, dbfile);
 
             if (!dbfile.exists()) {
@@ -824,13 +826,19 @@ public class SQLitePlugin extends CordovaPlugin {
         private boolean androidLockWorkaround;
         final BlockingQueue<DBQuery> q;
         final CallbackContext openCbc;
+        
+        private int modeAssets;
 
         SQLiteDatabase mydb;
 
         DBRunner(final String dbname, JSONObject options, CallbackContext cbc) {
+            
             this.dbname = dbname;
             this.createFromAssets = options.has("createFromResource");
+            if(options.has("modeAssets")) modeAssets = options.getInt("modeAssets");
+            else modeAssets = 0;
             this.androidLockWorkaround = options.has("androidLockWorkaround");
+            
             if (this.androidLockWorkaround)
                 Log.v(SQLitePlugin.class.getSimpleName(), "Android db closing/locking workaround applied");
 
@@ -840,7 +848,7 @@ public class SQLitePlugin extends CordovaPlugin {
 
         public void run() {
             try {
-                this.mydb = openDatabase(dbname, this.createFromAssets, this.openCbc);
+                this.mydb = openDatabase(dbname, this.createFromAssets, this.openCbc, this.modeAssets);
             } catch (Exception e) {
                 Log.e(SQLitePlugin.class.getSimpleName(), "unexpected error, stopping db thread", e);
                 dbrmap.remove(dbname);
