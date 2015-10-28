@@ -618,7 +618,7 @@ public class SQLitePlugin extends CordovaPlugin {
             String obj = options.toString();
             Log.i("ionic 2", obj);
             Log.i("ionic 2 createFromResource", options.getString("createFromResource"));
-            if(this.createFromAssets) modeAssets = Integer.parseInt(options.getString("createFromResource")));
+            if(this.createFromAssets) modeAssets = Integer.parseInt(options.getString("createFromResource"));
             else modeAssets = 0;
             this.oldImpl = options.has("androidOldDatabaseImplementation");
             Log.v(SQLitePlugin.class.getSimpleName(), "Android db implementation: " + (oldImpl ? "OLD" : "sqlite4java (NDK)"));
