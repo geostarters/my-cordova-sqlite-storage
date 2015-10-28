@@ -215,9 +215,14 @@ public class SQLitePlugin extends CordovaPlugin {
             File dbfile = this.cordova.getActivity().getDatabasePath(dbname);
             Log.i("ionic 1", "dbfile.getAbsolutePath():"+dbfile.getAbsolutePath());
             Log.i("ionic 1", "modeAssets:"+modeAssets);
-            if (!dbfile.exists() && createFromAssets) this.createFromAssets(dbname, dbfile);
-
-            if (!dbfile.exists()) {
+            
+            if (!dbfile.exists() && createFromAssets && modeAssets == 1){
+                this.createFromAssets(dbname, dbfile);
+            }else if (!dbfile.exists() && createFromAssets && modeAssets == 2){                
+                dfile = new File(dbname);
+                Log.i("ionic 1", "dbname:"+dbname);
+                Log.i("ionic 1", "Path de database:"+dbfile.getAbsolutePath());
+            }else if (!dbfile.exists()) {
                 dbfile.getParentFile().mkdirs();
             }
 

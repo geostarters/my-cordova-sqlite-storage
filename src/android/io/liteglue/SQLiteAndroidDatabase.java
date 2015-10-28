@@ -457,7 +457,6 @@ class SQLiteAndroidDatabase
                 row.put(key, cur.getDouble(i));
                 break;
             case Cursor.FIELD_TYPE_BLOB:
-                Log.i("ionic", "Tipus BLOB:"+ new String(Base64.encode(cur.getBlob(i), Base64.DEFAULT)));
                 row.put(key, new String(Base64.encode(cur.getBlob(i), Base64.DEFAULT)));
                 break;
             case Cursor.FIELD_TYPE_STRING:
