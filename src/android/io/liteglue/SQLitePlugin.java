@@ -623,13 +623,13 @@ public class SQLitePlugin extends CordovaPlugin {
             this.dbname = dbname;
             this.createFromAssets = options.has("createFromResource");
             String obj = options.toString();
-            Log.i("ionic 2", obj);
+            Log.i("ionic 1", obj);
             try{
-                Log.i("ionic 2 createFromResource", options.getString("createFromResource"));
+                Log.i("ionic 1 createFromResource", options.getString("createFromResource"));
                 if(this.createFromAssets) modeAssets = Integer.parseInt(options.getString("createFromResource"));
                 else modeAssets = 0;
             }catch(Exception e){
-                Log.e("ioni 2", "Error getString del JSON");
+                Log.e("ionic 1", "Error getString del JSON");
             }
 
             this.oldImpl = options.has("androidOldDatabaseImplementation");
