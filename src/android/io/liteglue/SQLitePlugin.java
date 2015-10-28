@@ -50,7 +50,7 @@ public class SQLitePlugin extends CordovaPlugin {
      * NOTE: Using default constructor, no explicit constructor.
      */
     
-    private static boolean LOG = false;
+    private static final boolean LOG = false;
 
     /**
      * Executes the request and returns PluginResult.
@@ -215,22 +215,22 @@ public class SQLitePlugin extends CordovaPlugin {
             // [should be true according to the code in DBRunner.run()]
 
             File dbfile = this.cordova.getActivity().getDatabasePath(dbname);
-            if(this.LOG) Log.i("ionic 1", "dbfile.getAbsolutePath():"+dbfile.getAbsolutePath());
-            if(this.LOG) Log.i("ionic 1", " openDatabase modeAssets:"+modeAssets);
+            if(LOG) Log.i("ionic 1", "dbfile.getAbsolutePath():"+dbfile.getAbsolutePath());
+            if(LOG) Log.i("ionic 1", " openDatabase modeAssets:"+modeAssets);
             
             if (!dbfile.exists() && createFromAssets && modeAssets == 1){
                 this.createFromAssets(dbname, dbfile);
             }else if (!dbfile.exists() && createFromAssets && modeAssets == 2){                
                 dbfile = new File(dbname);
-                if(this.LOG) Log.i("ionic 1", "dbname:"+dbname);
-                if(this.LOG) Log.i("ionic 1", "Path de database:"+dbfile.getAbsolutePath());
+                if(LOG) Log.i("ionic 1", "dbname:"+dbname);
+                if(LOG) Log.i("ionic 1", "Path de database:"+dbfile.getAbsolutePath());
             } 
                 
             if (!dbfile.exists()) {
                 dbfile.getParentFile().mkdirs();
             }
 
-            if(this.LOG) Log.i("ionic 1", "Open sqlite db: " + dbfile.getAbsolutePath());
+            if(LOG) Log.i("ionic 1", "Open sqlite db: " + dbfile.getAbsolutePath());
 
             SQLiteAndroidDatabase mydb = old_impl ? new SQLiteAndroidDatabase() : new SQLiteDatabaseNDK();
             mydb.open(dbfile);
@@ -254,11 +254,11 @@ public class SQLitePlugin extends CordovaPlugin {
     {
         InputStream in = null;
         OutputStream out = null;
-        if(this.LOG) Log.i("ionic", "createFromAssets, recuperem fitcer...");
+        if(LOG) Log.i("ionic", "createFromAssets, recuperem fitcer...");
             try {
                 in = this.cordova.getActivity().getAssets().open("www/" + myDBName);
                 String dbPath = dbfile.getAbsolutePath();
-                if(this.LOG) Log.i("ionic", "dbPath:"+dbPath);
+                if(LOG) Log.i("ionic", "dbPath:"+dbPath);
                 dbPath = dbPath.substring(0, dbPath.lastIndexOf("/") + 1);
 
                 File dbPathFile = new File(dbPath);
@@ -275,8 +275,8 @@ public class SQLitePlugin extends CordovaPlugin {
                 while ((len = in.read(buf)) > 0)
                     out.write(buf, 0, len);
     
-                if(this.LOG) Log.i("ionic", "Copied prepopulated DB content to: " + newDbFile.getAbsolutePath());
-                if(this.LOG) Log.i("ionic", "Copied prepopulated DB content to: " + newDbFile.getAbsolutePath());
+                if(LOG) Log.i("ionic", "Copied prepopulated DB content to: " + newDbFile.getAbsolutePath());
+                if(LOG) Log.i("ionic", "Copied prepopulated DB content to: " + newDbFile.getAbsolutePath());
             } catch (IOException e) {
                 Log.i("ionic createFromAssets", "No prepopulated DB found, Error=" + e.getMessage());
             } finally {
@@ -422,7 +422,7 @@ public class SQLitePlugin extends CordovaPlugin {
       void executeSqlBatch( String[] queryarr, JSONArray[] jsonparams,
                             String[] queryIDs, CallbackContext cbc) {
 
-        if(this.LOG) Log.i("ionic", "executeSqlBatch.....");
+        if(LOG) Log.i("ionic", "executeSqlBatch.....");
         
         if (mydb == null) {
             // not allowed - can only happen if someone has closed (and possibly deleted) a database and then re-used the database
@@ -541,7 +541,7 @@ public class SQLitePlugin extends CordovaPlugin {
             JSONArray rowsArrayResult = new JSONArray();
             String key = "";
             int colCount = myStatement.getColumnCount();
-            if(this.LOG) Log.i("ionic","Construeix JSON resultats....");
+            if(LOG) Log.i("ionic","Construeix JSON resultats....");
             // Build up JSON result object for each row
             do {
                 JSONObject row = new JSONObject();
@@ -568,11 +568,11 @@ public class SQLitePlugin extends CordovaPlugin {
                                 //row.put(key, res);
                                 //Log.i("ionic", myStatement.getColumnBlob(i));
                         case SQLColumnType.TEXT:
-                                if(this.LOG) Log.i("ionic", "Column type es text");
-                                if(this.LOG) Log.i("ionic", "key:"+key);
+                                if(LOG) Log.i("ionic", "Column type es text");
+                                if(LOG) Log.i("ionic", "key:"+key);
                         default: // (just in case)
-                                if(this.LOG) Log.i("ionic", "Column type es default");
-                                if(this.LOG) Log.i("ionic", "key:"+key);
+                                if(LOG) Log.i("ionic", "Column type es default");
+                                if(LOG) Log.i("ionic", "key:"+key);
                             row.put(key, myStatement.getColumnTextNativeString(i));
                         }
 
@@ -615,7 +615,7 @@ public class SQLitePlugin extends CordovaPlugin {
             this.dbname = dbname;
             this.createFromAssets = options.has("createFromResource");
             try{
-                if(this.LOG) Log.i("ionic 1 createFromResource", options.getString("createFromResource"));
+                if(LOG) Log.i("ionic 1 createFromResource", options.getString("createFromResource"));
                 if(this.createFromAssets) modeAssets = Integer.parseInt(options.getString("createFromResource"));
                 else modeAssets = 0;
             }catch(Exception e){
