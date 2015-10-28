@@ -536,6 +536,9 @@
       if (!!openargs.createFromLocation && openargs.createFromLocation === 1) {
         openargs.createFromResource = "1";
       }
+      if (!!openargs.createFromLocation && openargs.createFromLocation === 2) {
+        openargs.createFromResource = "2";
+      }    
       if (!!openargs.androidDatabaseImplementation && openargs.androidDatabaseImplementation === 2) {
         openargs.androidOldDatabaseImplementation = 1;
       }
