@@ -51,7 +51,7 @@ public class SQLitePlugin extends CordovaPlugin {
      */
 
     private static final boolean LOG = true;
-
+    private boolean readonly = true;
     /**
      * Executes the request and returns PluginResult.
      *
@@ -220,10 +220,14 @@ public class SQLitePlugin extends CordovaPlugin {
 
             if (!dbfile.exists() && createFromAssets && modeAssets == 1){
                 this.createFromAssets(dbname, dbfile);
+                readonly = false;
+                if(LOG) Log.i("ionic 1", "read only FALSE:"+readonly);
+
             }else if (!dbfile.exists() && createFromAssets && modeAssets == 2){
                 dbfile = new File(dbname);
                 if(LOG) Log.i("ionic 1", "dbname:"+dbname);
                 if(LOG) Log.i("ionic 1", "Path de database:"+dbfile.getAbsolutePath());
+                if(LOG) Log.i("ionic 1", "read only TRUE:"+readonly);
             }
 
             if (!dbfile.exists()) {
@@ -386,8 +390,17 @@ public class SQLitePlugin extends CordovaPlugin {
        */
       @Override
       void open(File dbFile) throws Exception {
-        mydb = connector.newSQLiteConnection(dbFile.getAbsolutePath(),
-          SQLiteOpenFlags.READWRITE | SQLiteOpenFlags.CREATE);
+
+          if(readonly){
+              if(LOG) Log.i("ionic", "Open amb READONLY true");
+              mydb = connector.newSQLiteConnection(dbFile.getAbsolutePath(),
+                SQLiteOpenFlags.READONLY );
+          }else{
+              if(LOG) Log.i("ionic", "Open amb READONLY false");
+              mydb = connector.newSQLiteConnection(dbFile.getAbsolutePath(),
+                SQLiteOpenFlags.READWRITE | SQLiteOpenFlags.CREATE);
+          }
+
       }
 
       /**
