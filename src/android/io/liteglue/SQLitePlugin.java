@@ -51,7 +51,7 @@ public class SQLitePlugin extends CordovaPlugin {
      */
 
     private static final boolean LOG = true;
-    private boolean readonly = false;
+
     /**
      * Executes the request and returns PluginResult.
      *
@@ -220,22 +220,10 @@ public class SQLitePlugin extends CordovaPlugin {
 
             if (!dbfile.exists() && createFromAssets && modeAssets == 1){
                 this.createFromAssets(dbname, dbfile);
-
-
             }else if (!dbfile.exists() && createFromAssets && modeAssets == 2){
                 dbfile = new File(dbname);
                 if(LOG) Log.i("ionic 1", "dbname:"+dbname);
                 if(LOG) Log.i("ionic 1", "Path de database:"+dbfile.getAbsolutePath());
-
-            }
-
-
-            if(modeAssets == 1){
-                readonly = false;
-                if(LOG) Log.i("ionic 1", "read only FALSE:"+readonly);
-            }else{
-                readonly = true;
-                if(LOG) Log.i("ionic 1", "read only TRUE:"+readonly);
             }
 
             if (!dbfile.exists()) {
@@ -244,8 +232,7 @@ public class SQLitePlugin extends CordovaPlugin {
 
             if(LOG) Log.i("ionic 1", "Open sqlite db: " + dbfile.getAbsolutePath());
 
-            // SQLiteAndroidDatabase mydb = old_impl ? new SQLiteAndroidDatabase() : new SQLiteDatabaseNDK();
-            SQLiteAndroidDatabase mydb = new SQLiteDatabaseNDK();
+            SQLiteAndroidDatabase mydb = old_impl ? new SQLiteAndroidDatabase() : new SQLiteDatabaseNDK();
             mydb.open(dbfile);
 
             if (cbc != null) // XXX Android locking/closing BUG workaround
@@ -399,17 +386,8 @@ public class SQLitePlugin extends CordovaPlugin {
        */
       @Override
       void open(File dbFile) throws Exception {
-
-          if(readonly){
-              if(LOG) Log.i("ionic", "Open amb READONLY true");
-              mydb = connector.newSQLiteConnection(dbFile.getAbsolutePath(),
-                SQLiteOpenFlags.READONLY );
-          }else{
-              if(LOG) Log.i("ionic", "Open amb READONLY false");
-              mydb = connector.newSQLiteConnection(dbFile.getAbsolutePath(),
-                SQLiteOpenFlags.READWRITE | SQLiteOpenFlags.CREATE);
-          }
-
+        mydb = connector.newSQLiteConnection(dbFile.getAbsolutePath(),
+          SQLiteOpenFlags.READWRITE | SQLiteOpenFlags.CREATE);
       }
 
       /**
