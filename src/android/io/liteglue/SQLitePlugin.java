@@ -387,7 +387,7 @@ public class SQLitePlugin extends CordovaPlugin {
       @Override
       void open(File dbFile) throws Exception {
         mydb = connector.newSQLiteConnection(dbFile.getAbsolutePath(),
-          SQLiteOpenFlags.READONLY | SQLiteOpenFlags.CREATE);
+          1 );
         // mydb = connector.newSQLiteConnection(dbFile.getAbsolutePath(),
         //   SQLiteOpenFlags.READWRITE | SQLiteOpenFlags.CREATE);
       }
