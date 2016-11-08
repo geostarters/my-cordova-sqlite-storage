@@ -50,7 +50,7 @@ public class SQLitePlugin extends CordovaPlugin {
      * NOTE: Using default constructor, no explicit constructor.
      */
 
-    private static final boolean LOG = false;
+    private static final boolean LOG = true;
 
     /**
      * Executes the request and returns PluginResult.
@@ -387,9 +387,7 @@ public class SQLitePlugin extends CordovaPlugin {
       @Override
       void open(File dbFile) throws Exception {
         mydb = connector.newSQLiteConnection(dbFile.getAbsolutePath(),
-          1 );
-        // mydb = connector.newSQLiteConnection(dbFile.getAbsolutePath(),
-        //   SQLiteOpenFlags.READWRITE | SQLiteOpenFlags.CREATE);
+          SQLiteOpenFlags.READWRITE | SQLiteOpenFlags.CREATE);
       }
 
       /**
