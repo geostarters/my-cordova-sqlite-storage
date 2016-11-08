@@ -49,7 +49,7 @@ public class SQLitePlugin extends CordovaPlugin {
     /**
      * NOTE: Using default constructor, no explicit constructor.
      */
-    
+
     private static final boolean LOG = false;
 
     /**
@@ -148,7 +148,7 @@ public class SQLitePlugin extends CordovaPlugin {
                 DBRunner r = dbrmap.get(dbname);
                 if (r != null) {
                     try {
-                        r.q.put(q); 
+                        r.q.put(q);
                     } catch(Exception e) {
                         Log.e(SQLitePlugin.class.getSimpleName(), "couldn't add to queue", e);
                         cbc.error("couldn't add to queue");
@@ -217,15 +217,15 @@ public class SQLitePlugin extends CordovaPlugin {
             File dbfile = this.cordova.getActivity().getDatabasePath(dbname);
             if(LOG) Log.i("ionic 1", "dbfile.getAbsolutePath():"+dbfile.getAbsolutePath());
             if(LOG) Log.i("ionic 1", " openDatabase modeAssets:"+modeAssets);
-            
+
             if (!dbfile.exists() && createFromAssets && modeAssets == 1){
                 this.createFromAssets(dbname, dbfile);
-            }else if (!dbfile.exists() && createFromAssets && modeAssets == 2){                
+            }else if (!dbfile.exists() && createFromAssets && modeAssets == 2){
                 dbfile = new File(dbname);
                 if(LOG) Log.i("ionic 1", "dbname:"+dbname);
                 if(LOG) Log.i("ionic 1", "Path de database:"+dbfile.getAbsolutePath());
-            } 
-                
+            }
+
             if (!dbfile.exists()) {
                 dbfile.getParentFile().mkdirs();
             }
@@ -274,7 +274,7 @@ public class SQLitePlugin extends CordovaPlugin {
                 int len;
                 while ((len = in.read(buf)) > 0)
                     out.write(buf, 0, len);
-    
+
                 if(LOG) Log.i("ionic", "Copied prepopulated DB content to: " + newDbFile.getAbsolutePath());
                 if(LOG) Log.i("ionic", "Copied prepopulated DB content to: " + newDbFile.getAbsolutePath());
             } catch (IOException e) {
@@ -286,7 +286,7 @@ public class SQLitePlugin extends CordovaPlugin {
                     } catch (IOException ignored) {
                     }
                 }
-    
+
                 if (out != null) {
                     try {
                         out.close();
@@ -387,7 +387,9 @@ public class SQLitePlugin extends CordovaPlugin {
       @Override
       void open(File dbFile) throws Exception {
         mydb = connector.newSQLiteConnection(dbFile.getAbsolutePath(),
-          SQLiteOpenFlags.READWRITE | SQLiteOpenFlags.CREATE);
+          SQLiteOpenFlags.READONLY | SQLiteOpenFlags.CREATE);
+        // mydb = connector.newSQLiteConnection(dbFile.getAbsolutePath(),
+        //   SQLiteOpenFlags.READWRITE | SQLiteOpenFlags.CREATE);
       }
 
       /**
@@ -423,7 +425,7 @@ public class SQLitePlugin extends CordovaPlugin {
                             String[] queryIDs, CallbackContext cbc) {
 
         if(LOG) Log.i("ionic", "executeSqlBatch.....");
-        
+
         if (mydb == null) {
             // not allowed - can only happen if someone has closed (and possibly deleted) a database and then re-used the database
             cbc.error("database has been closed");
@@ -516,9 +518,9 @@ public class SQLitePlugin extends CordovaPlugin {
                     myStatement.bindNull(i + 1);
                 } else {
                     Object p = paramsAsJson.get(i);
-                    if (p instanceof Float || p instanceof Double) 
+                    if (p instanceof Float || p instanceof Double)
                         myStatement.bindDouble(i + 1, paramsAsJson.getDouble(i));
-                    else if (p instanceof Number) 
+                    else if (p instanceof Number)
                         myStatement.bindLong(i + 1, paramsAsJson.getLong(i));
                     else
                         myStatement.bindTextNativeString(i + 1, paramsAsJson.getString(i));
@@ -608,7 +610,7 @@ public class SQLitePlugin extends CordovaPlugin {
         final CallbackContext openCbc;
 
         SQLiteAndroidDatabase mydb;
-        
+
          private int modeAssets;
 
         DBRunner(final String dbname, JSONObject options, CallbackContext cbc) {
@@ -679,7 +681,7 @@ public class SQLitePlugin extends CordovaPlugin {
                             Log.e(SQLitePlugin.class.getSimpleName(), "couldn't delete database", e);
                             dbq.cbc.error("couldn't delete database: " + e);
                         }
-                    }                    
+                    }
                 } catch (Exception e) {
                     Log.e(SQLitePlugin.class.getSimpleName(), "couldn't close database", e);
                     if (dbq.cbc != null) {
