@@ -624,13 +624,16 @@ public class SQLitePlugin extends CordovaPlugin {
             this.dbname = dbname;
             this.createFromAssets = options.has("createFromResource");
             this.readOnly = 0;
-            if(options.has("modeReadOnly")){
-                this.readOnly = Integer.parseInt(options.getString("createFromResource"));
-                if(LOG) Log.i("ionic 1", " troba param readonly: "+readOnly);
-            }
+
 
 
             try{
+
+                if(options.has("modeReadOnly")){
+                    this.readOnly = Integer.parseInt(options.getString("modeReadOnly"));
+                    if(LOG) Log.i("ionic 1", " troba param readonly: "+this.readOnly);
+                }
+
                 if(LOG) Log.i("ionic 1", " createFromResource: "+options.getString("createFromResource"));
                 if(this.createFromAssets) modeAssets = Integer.parseInt(options.getString("createFromResource"));
                 else modeAssets = 0;
