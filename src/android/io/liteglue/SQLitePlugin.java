@@ -233,6 +233,7 @@ public class SQLitePlugin extends CordovaPlugin {
 
             if(LOG) Log.i("ionic 1", "Open sqlite db: " + dbfile.getAbsolutePath());
             if(LOG) Log.i("ionic 1", "modeAssets: " + modeAssets);
+            if(LOG) Log.i("ionic 1", "readOnly: " + readOnly);
 
             SQLiteAndroidDatabase mydb = old_impl ? new SQLiteAndroidDatabase() : new SQLiteDatabaseNDK();
             if(readOnly == 1){

@@ -538,12 +538,15 @@
       }
       if (!!openargs.createFromLocation && openargs.createFromLocation === 2) {
         openargs.createFromResource = "2";
-      }    
+      }
       if (!!openargs.androidDatabaseImplementation && openargs.androidDatabaseImplementation === 2) {
         openargs.androidOldDatabaseImplementation = 1;
       }
       if (!!openargs.androidLockWorkaround && openargs.androidLockWorkaround === 1) {
         openargs.androidBugWorkaround = 1;
+      }
+      if (!!openargs.modeReadOnly && openargs.modeReadOnly === 1) {
+        openargs.modeReadOnly = 1;
       }
       return new SQLitePlugin(openargs, okcb, errorcb);
     }),
