@@ -220,7 +220,8 @@ public class SQLitePlugin extends CordovaPlugin {
 
             if (!dbfile.exists() && createFromAssets && modeAssets == 1){
                 this.createFromAssets(dbname, dbfile);
-            }else if (!dbfile.exists() && createFromAssets && modeAssets == 2){
+
+            }else if (!dbfile.exists() && createFromAssets && modeAssets > 1){
                 dbfile = new File(dbname);
                 if(LOG) Log.i("ionic 1", "dbname:"+dbname);
                 if(LOG) Log.i("ionic 1", "Path de database:"+dbfile.getAbsolutePath());
@@ -233,7 +234,12 @@ public class SQLitePlugin extends CordovaPlugin {
             if(LOG) Log.i("ionic 1", "Open sqlite db: " + dbfile.getAbsolutePath());
 
             SQLiteAndroidDatabase mydb = old_impl ? new SQLiteAndroidDatabase() : new SQLiteDatabaseNDK();
-            mydb.open(dbfile);
+            if(modeAssets == 3){
+                mydb.openReadOnly(dbfile);
+            }else{
+                mydb.open(dbfile);
+            }
+
 
             if (cbc != null) // XXX Android locking/closing BUG workaround
                 cbc.success();

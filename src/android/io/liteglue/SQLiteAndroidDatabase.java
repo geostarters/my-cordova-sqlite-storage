@@ -66,6 +66,16 @@ class SQLiteAndroidDatabase
     }
 
     /**
+     * Open a database.
+     *
+     * @param dbfile   The database File specification
+     */
+    void openReadOnly(File dbfile) throws Exception {
+        dbFile = dbfile; // for possible bug workaround
+        mydb = SQLiteDatabase.openDatabase(dbfile, null, SQLiteDatabase.OPEN_READONLY);
+    }
+
+    /**
      * Close a database (in the current thread).
      */
     void closeDatabaseNow() {
@@ -94,7 +104,7 @@ class SQLiteAndroidDatabase
                                  String[] queryIDs, CallbackContext cbc) {
 
         Log.i("ionic", "android executeSqlBatch");
-        
+
         if (mydb == null) {
             // not allowed - can only happen if someone has closed (and possibly deleted) a database and then re-used the database
             cbc.error("database has been closed");
@@ -479,7 +489,7 @@ class SQLiteAndroidDatabase
             row.put(key, cursor.getLong(i));
         } else if (cursorWindow.isFloat(pos, i)) {
             row.put(key, cursor.getDouble(i));
-        } else if (cursorWindow.isBlob(pos, i)) {            
+        } else if (cursorWindow.isBlob(pos, i)) {
             row.put(key, new String(Base64.encode(cursor.getBlob(i), Base64.DEFAULT)));
         } else { // string
             row.put(key, cursor.getString(i));
