@@ -209,7 +209,7 @@ public class SQLitePlugin extends CordovaPlugin {
      *
      * @param dbName   The name of the database file
      */
-    private SQLiteAndroidDatabase openDatabase(String dbname, boolean createFromAssets, CallbackContext cbc, boolean old_impl, int modeAssets) throws Exception {
+    private SQLiteAndroidDatabase openDatabase(String dbname, boolean createFromAssets, CallbackContext cbc, boolean old_impl, int modeAssets, int readOnly) throws Exception {
         try {
             // ASSUMPTION: no db (connection/handle) is already stored in the map
             // [should be true according to the code in DBRunner.run()]
@@ -623,9 +623,9 @@ public class SQLitePlugin extends CordovaPlugin {
         DBRunner(final String dbname, JSONObject options, CallbackContext cbc) {
             this.dbname = dbname;
             this.createFromAssets = options.has("createFromResource");
-            readOnly = 0;
+            this.readOnly = 0;
             if(options.has("modeReadOnly")){
-                readOnly = Integer.parseInt(options.getString("createFromResource"));
+                this.readOnly = Integer.parseInt(options.getString("createFromResource"));
                 if(LOG) Log.i("ionic 1", " troba param readonly: "+readOnly);
             }
 
@@ -650,7 +650,7 @@ public class SQLitePlugin extends CordovaPlugin {
 
         public void run() {
             try {
-                this.mydb = openDatabase(dbname, this.createFromAssets, this.openCbc, this.oldImpl, this.modeAssets);
+                this.mydb = openDatabase(dbname, this.createFromAssets, this.openCbc, this.oldImpl, this.modeAssets, this.readOnly);
             } catch (Exception e) {
                 Log.e(SQLitePlugin.class.getSimpleName(), "unexpected error, stopping db thread", e);
                 dbrmap.remove(dbname);
