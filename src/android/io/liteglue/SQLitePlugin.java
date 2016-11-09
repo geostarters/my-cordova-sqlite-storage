@@ -235,7 +235,7 @@ public class SQLitePlugin extends CordovaPlugin {
             if(LOG) Log.i("ionic 1", "modeAssets: " + modeAssets);
 
             SQLiteAndroidDatabase mydb = old_impl ? new SQLiteAndroidDatabase() : new SQLiteDatabaseNDK();
-            if(modeAssets == 3){
+            if(readOnly == 1){
                 if(LOG) Log.i("ionic 1", "READ ONLY! ");
                 mydb.openReadOnly(dbfile);
             }else{
@@ -618,12 +618,20 @@ public class SQLitePlugin extends CordovaPlugin {
         SQLiteAndroidDatabase mydb;
 
          private int modeAssets;
+         private int readOnly;
 
         DBRunner(final String dbname, JSONObject options, CallbackContext cbc) {
             this.dbname = dbname;
             this.createFromAssets = options.has("createFromResource");
+            readOnly = 0;
+            if(options.has("modeReadOnly")){
+                readOnly = Integer.parseInt(options.getString("createFromResource"));
+                if(LOG) Log.i("ionic 1", " troba param readonly: "+readOnly);
+            }
+
+
             try{
-                if(LOG) Log.i("ionic 1 createFromResource", options.getString("createFromResource"));
+                if(LOG) Log.i("ionic 1", " createFromResource: "+options.getString("createFromResource"));
                 if(this.createFromAssets) modeAssets = Integer.parseInt(options.getString("createFromResource"));
                 else modeAssets = 0;
             }catch(Exception e){
