@@ -72,7 +72,7 @@ class SQLiteAndroidDatabase
      */
     void openReadOnly(File dbfile) throws Exception {
         dbFile = dbfile; // for possible bug workaround
-        mydb = SQLiteDatabase.openDatabase(dbfile, null, SQLiteDatabase.OPEN_READONLY);
+        mydb = SQLiteDatabase.openDatabase(dbfile.getPath(), null, SQLiteDatabase.OPEN_READONLY);
     }
 
     /**
