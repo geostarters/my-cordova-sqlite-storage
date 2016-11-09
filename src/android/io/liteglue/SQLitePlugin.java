@@ -209,7 +209,7 @@ public class SQLitePlugin extends CordovaPlugin {
      *
      * @param dbName   The name of the database file
      */
-    private SQLiteAndroidDatabase openDatabase(String dbname, boolean createFromAssets, CallbackContext cbc, boolean old_impl, int modeAssets, int readOnly) throws Exception {
+    private SQLiteAndroidDatabase openDatabase(String dbname, boolean createFromAssets, CallbackContext cbc, boolean old_impl, int modeAssets) throws Exception {
         try {
             // ASSUMPTION: no db (connection/handle) is already stored in the map
             // [should be true according to the code in DBRunner.run()]
@@ -233,10 +233,9 @@ public class SQLitePlugin extends CordovaPlugin {
 
             if(LOG) Log.i("ionic 1", "Open sqlite db: " + dbfile.getAbsolutePath());
             if(LOG) Log.i("ionic 1", "modeAssets: " + modeAssets);
-            if(LOG) Log.i("ionic 1", "readOnly: " + readOnly);
 
             SQLiteAndroidDatabase mydb = old_impl ? new SQLiteAndroidDatabase() : new SQLiteDatabaseNDK();
-            if(readOnly == 1){
+            if(modeAssets == 3){
                 if(LOG) Log.i("ionic 1", "READ ONLY! ");
                 mydb.openReadOnly(dbfile);
             }else{
@@ -619,22 +618,11 @@ public class SQLitePlugin extends CordovaPlugin {
         SQLiteAndroidDatabase mydb;
 
          private int modeAssets;
-         private int readOnly;
 
         DBRunner(final String dbname, JSONObject options, CallbackContext cbc) {
             this.dbname = dbname;
             this.createFromAssets = options.has("createFromResource");
-            this.readOnly = 0;
-
-
-
             try{
-
-                if(options.has("modeReadOnly")){
-                    this.readOnly = Integer.parseInt(options.getString("modeReadOnly"));
-                    if(LOG) Log.i("ionic 1", " troba param readonly: "+this.readOnly);
-                }
-
                 if(LOG) Log.i("ionic 1", " createFromResource: "+options.getString("createFromResource"));
                 if(this.createFromAssets) modeAssets = Integer.parseInt(options.getString("createFromResource"));
                 else modeAssets = 0;
@@ -654,7 +642,7 @@ public class SQLitePlugin extends CordovaPlugin {
 
         public void run() {
             try {
-                this.mydb = openDatabase(dbname, this.createFromAssets, this.openCbc, this.oldImpl, this.modeAssets, this.readOnly);
+                this.mydb = openDatabase(dbname, this.createFromAssets, this.openCbc, this.oldImpl, this.modeAssets);
             } catch (Exception e) {
                 Log.e(SQLitePlugin.class.getSimpleName(), "unexpected error, stopping db thread", e);
                 dbrmap.remove(dbname);
