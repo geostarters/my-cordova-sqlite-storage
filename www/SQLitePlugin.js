@@ -533,6 +533,9 @@
       }
       dblocation = !!openargs.location ? dblocations[openargs.location] : null;
       openargs.dblocation = dblocation || dblocations[0];
+
+      console.info("-----------------------------------------------------------------------------------");
+
       if (!!openargs.createFromLocation && openargs.createFromLocation === 1) {
         console.info("-------------------------------createFromResource 1");
         openargs.createFromResource = "1";
