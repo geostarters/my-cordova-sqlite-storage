@@ -571,17 +571,17 @@ public class SQLitePlugin extends CordovaPlugin {
                             break;
 
                         case SQLColumnType.BLOB:
-                            //     Log.i("ionic", "Column type es blob");
+                                Log.i("ionic", "Column type es blob");
                                //
                             //     ParcelFileDescriptor result = get.simpleQueryForBlobFileDescriptor();
                             //     FileInputStream fis = new FileInputStream(result.getFileDescriptor());
                             //     ObjectInputStream inStream = new ObjectInputStream(fis);
                             //     o=inStream.readObject();
                                //
-                            //    String res = new String(Base64.encode(myStatement.getColumnBlob(i), Base64.DEFAULT));
-                            //     Log.i("ionic", "blob:"+res);
-                            //     row.put(key, res);
-                            //     break;
+                               String res = new String(Base64.encode(myStatement.getBlob(i), Base64.DEFAULT));
+                                Log.i("ionic", "blob:"+res);
+                                row.put(key, res);
+                                break;
                                 // Log.i("ionic", myStatement.getColumnBlob(i));
                         case SQLColumnType.TEXT:
                                 if(LOG) Log.i("ionic", "Column type es text");
