@@ -799,13 +799,6 @@ public class SQLitePlugin extends CordovaPlugin {
                 row.put(key, cur.getDouble(i));
                 break;
             case Cursor.FIELD_TYPE_BLOB:
-
-            Log.d("SQLitePlugin", "BLOB!");
-
-            byte[] resultBLOB = cur.getBlob(i);
-            result = Base64.encodeToString(resultBLOB, Base64.DEFAULT);
-            Log.d("SQLitePlugin", "result trnasformat BLOB: "+result);
-
                 row.put(key, new String(Base64.encode(cur.getBlob(i), Base64.DEFAULT)));
                 break;
             case Cursor.FIELD_TYPE_STRING:
