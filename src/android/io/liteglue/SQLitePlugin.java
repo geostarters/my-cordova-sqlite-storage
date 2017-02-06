@@ -571,10 +571,10 @@ public class SQLitePlugin extends CordovaPlugin {
                             break;
 
                         case SQLColumnType.BLOB:
-                               // String res = new String(Base64.encode(myStatement.columnBlob(i), Base64.DEFAULT));
-                                //Log.i("ionic", "blob:"+res);
-                                //row.put(key, res);
-                                //Log.i("ionic", myStatement.getColumnBlob(i));
+                               String res = new String(Base64.encode(myStatement.columnBlob(i), Base64.DEFAULT));
+                                Log.i("ionic", "blob:"+res);
+                                row.put(key, res);
+                                Log.i("ionic", myStatement.getColumnBlob(i));
                         case SQLColumnType.TEXT:
                                 if(LOG) Log.i("ionic", "Column type es text");
                                 if(LOG) Log.i("ionic", "key:"+key);
