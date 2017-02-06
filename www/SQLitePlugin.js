@@ -534,18 +534,18 @@
       dblocation = !!openargs.location ? dblocations[openargs.location] : null;
       openargs.dblocation = dblocation || dblocations[0];
 
-      console.info("-----------------------------------------------------------------------------------");
+      // console.info("-----------------------------------------------------------------------------------");
 
       if (!!openargs.createFromLocation && openargs.createFromLocation === 1) {
-        console.info("-------------------------------createFromResource 1");
+        // console.info("-------------------------------createFromResource 1");
         openargs.createFromResource = "1";
       }
       if (!!openargs.createFromLocation && openargs.createFromLocation === 2) {
-        console.info("--------------------------------createFromResource 2");
+        // console.info("--------------------------------createFromResource 2");
         openargs.createFromResource = "2";
       }
       if (!!openargs.createFromLocation && openargs.createFromLocation === 3) {
-        console.info("-------------------------createFromResource 3");
+        // console.info("-------------------------createFromResource 3");
         openargs.createFromResource = "3";
       }
       if (!!openargs.androidDatabaseImplementation && openargs.androidDatabaseImplementation === 2) {

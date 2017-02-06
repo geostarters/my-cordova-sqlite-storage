@@ -64,7 +64,7 @@ public class SQLitePlugin extends CordovaPlugin {
      */
 
     private static final boolean LOG = false;
-    
+
     /**
      * Executes the request and returns PluginResult.
      *
@@ -161,7 +161,7 @@ public class SQLitePlugin extends CordovaPlugin {
                 DBRunner r = dbrmap.get(dbname);
                 if (r != null) {
                     try {
-                        r.q.put(q); 
+                        r.q.put(q);
                     } catch(Exception e) {
                         Log.e(SQLitePlugin.class.getSimpleName(), "couldn't add to queue", e);
                         cbc.error("couldn't add to queue");
@@ -233,10 +233,10 @@ public class SQLitePlugin extends CordovaPlugin {
             File dbfile = this.cordova.getActivity().getDatabasePath(dbname);
             if(LOG) Log.i("ionic 2", "dbfile.getAbsolutePath():"+dbfile.getAbsolutePath());
             if(LOG) Log.i("ionic 2", " openDatabase modeAssets:"+modeAssets);
-            
+
             if (!dbfile.exists() && createFromAssets && modeAssets == 1){
                 this.createFromAssets(dbname, dbfile);
-            }else if (!dbfile.exists() && createFromAssets && modeAssets == 2){                
+            }else if (!dbfile.exists() && createFromAssets && modeAssets == 2){
                 dbfile = new File(dbname);
                 if(LOG) Log.i("ionic 2", "dbname:"+dbname);
                 if(LOG) Log.i("ionic 2", "Path de database:"+dbfile.getAbsolutePath());
@@ -288,7 +288,7 @@ public class SQLitePlugin extends CordovaPlugin {
                 int len;
                 while ((len = in.read(buf)) > 0)
                     out.write(buf, 0, len);
-    
+
                 if(LOG) Log.i("ionic 2", "Copied prepopulated DB content to: " + newDbFile.getAbsolutePath());
             } catch (IOException e) {
                 Log.v("createFromAssets", "No prepopulated DB found, Error=" + e.getMessage());
@@ -299,7 +299,7 @@ public class SQLitePlugin extends CordovaPlugin {
                     } catch (IOException ignored) {
                     }
                 }
-    
+
                 if (out != null) {
                     try {
                         out.close();
@@ -799,6 +799,13 @@ public class SQLitePlugin extends CordovaPlugin {
                 row.put(key, cur.getDouble(i));
                 break;
             case Cursor.FIELD_TYPE_BLOB:
+
+            Log.d("SQLitePlugin", "BLOB!");
+
+            byte[] resultBLOB = cur.getBlob(i);
+            result = Base64.encodeToString(resultBLOB, Base64.DEFAULT);
+            Log.d("SQLitePlugin", "result trnasformat BLOB: "+result);
+
                 row.put(key, new String(Base64.encode(cur.getBlob(i), Base64.DEFAULT)));
                 break;
             case Cursor.FIELD_TYPE_STRING:
@@ -834,7 +841,7 @@ public class SQLitePlugin extends CordovaPlugin {
         private boolean androidLockWorkaround;
         final BlockingQueue<DBQuery> q;
         final CallbackContext openCbc;
-        
+
         private int modeAssets;
 
         SQLiteDatabase mydb;
@@ -849,8 +856,8 @@ public class SQLitePlugin extends CordovaPlugin {
                 else modeAssets = 0;
             }catch(Exception e){
                 Log.e("ionic 2", "Error getString del JSON");
-            }            
-            
+            }
+
             this.androidLockWorkaround = options.has("androidLockWorkaround");
             if (this.androidLockWorkaround)
                 Log.v(SQLitePlugin.class.getSimpleName(), "Android db closing/locking workaround applied");
@@ -910,7 +917,7 @@ public class SQLitePlugin extends CordovaPlugin {
                             Log.e(SQLitePlugin.class.getSimpleName(), "couldn't delete database", e);
                             dbq.cbc.error("couldn't delete database: " + e);
                         }
-                    }                    
+                    }
                 } catch (Exception e) {
                     Log.e(SQLitePlugin.class.getSimpleName(), "couldn't close database", e);
                     if (dbq.cbc != null) {
