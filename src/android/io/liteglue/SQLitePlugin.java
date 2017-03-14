@@ -50,7 +50,7 @@ public class SQLitePlugin extends CordovaPlugin {
      * NOTE: Using default constructor, no explicit constructor.
      */
 
-    private static final boolean LOG = true;
+    private static final boolean LOG = false;
 
     /**
      * Executes the request and returns PluginResult.
